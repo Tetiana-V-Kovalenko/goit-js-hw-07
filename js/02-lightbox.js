@@ -15,7 +15,7 @@ function onImageClick(evt){
     if (evt.target.nodeName !== 'IMG'){
         return;
     }
-    const lightbox = new SimpleLightbox('.gallery a', {  });
+    const lightbox = new SimpleLightbox('.gallery a', { /* options */ });
 }
 
 
