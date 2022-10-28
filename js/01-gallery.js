@@ -9,37 +9,37 @@ galleryContainer.insertAdjacentHTML("beforeend", galleryMarkupHTML);
 
 galleryContainer.addEventListener("click", onImageClick);
 
-
+const instance = basicLightbox.create(
+  ``,
+  {
+    onShow: (instance) => {
+      galleryContainer.addEventListener("keydown", onEscapeKeydown);
+    },
+    onClose: (instance) => {
+      galleryContainer.removeEventListener("keydown", onEscapeKeydown);
+    },
+  }
+);
 
 function onImageClick(evt) {
+
   if (evt.target.nodeName !== "IMG") {
     return;
   }
-
+  const el = instance.element().insertAdjacentHTML('beforeend',`
+  <img src="${evt.target.dataset.source}" width='800' heigth='600'>
+  `)
   evt.preventDefault();
-  
-  const onEscapeKeydown = (evt) => {
-  if (evt.code === 'Escape') {
-    instance.close();
-  }
-}
-  const instance = basicLightbox.create(
-    `
-<img src="${evt.target.dataset.source}" >
-`,
-    {
-      onShow: (instance) => {
-        galleryContainer.addEventListener("keydown", onEscapeKeydown)
-      },
-      onClose: (instance) => {
-        galleryContainer.removeEventListener("keydown", onEscapeKeydown);
-      },
-    }
-  );
-
+ 
   instance.show();
 }
 
+
+function onEscapeKeydown(e) {
+  if (e.code === "Escape") {
+    instance.close();
+  }
+}
 
 function createGalleryItems(galleryItems) {
   return galleryItems
